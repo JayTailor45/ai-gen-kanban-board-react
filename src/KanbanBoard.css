@@ -19,12 +19,26 @@
 
 .task {
     background-color: #ffffff;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.task:hover {
+    transform: translateY(-2px);
+
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 3px;
-    padding: 8px;
-    margin: 5px 0;
+    padding: 16px;
+    margin: 14px;
     cursor: pointer;
 }
+
+/*}*/
 
 button {
     margin: 10px 0;

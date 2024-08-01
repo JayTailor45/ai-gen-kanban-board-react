@@ -69,7 +69,7 @@ const KanbanBoard = () => {
                                     {column.tasks.map((task, index) => (
                                         <Draggable key={task} draggableId={task} index={index}>
                                             {(provided) => (
-                                                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                <div className={"task"} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                     {task}
                                                 </div>
                                             )}
