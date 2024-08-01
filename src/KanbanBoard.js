@@ -65,7 +65,18 @@ const KanbanBoard = () => {
                         <Droppable key={column.id} droppableId={column.id}>
                             {(provided) => (
                                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    <h2>{column.title}</h2>
+<h2>
+    <input
+        type="text"
+        value={column.title}
+        onChange={(e) => {
+            const updatedColumns = { ...columns };
+            updatedColumns[column.id].title = e.target.value;
+            setColumns(updatedColumns);
+        }}
+        style={{ width: '100%', textAlign: 'center', border: 'none', outline: 'none', fontSize: '1.2em' }}
+    />
+</h2>
                                     {column.tasks.map((task, index) => (
                                         <Draggable key={task} draggableId={task} index={index}>
                                             {(provided) => (
