@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const KanbanBoard = () => {
+    const [newTask, setNewTask] = useState('');
+    const [selectedColumn, setSelectedColumn] = useState('column-1');
     const [columns, setColumns] = useState({
         'column-1': { id: 'column-1', title: 'To Do', tasks: [] },
         'column-2': { id: 'column-2', title: 'In Progress', tasks: [] },
@@ -31,6 +33,29 @@ const KanbanBoard = () => {
 
     return (
         <div>
+            <input
+                type="text"
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                placeholder="Enter new task"
+            />
+            <select onChange={(e) => setSelectedColumn(e.target.value)} value={selectedColumn}>
+                {Object.keys(columns).map((columnId) => (
+                    <option key={columnId} value={columnId}>
+                        {columns[columnId].title}
+                    </option>
+                ))}
+            </select>
+            <button onClick={() => {
+                if (newTask) {
+                    const updatedColumns = { ...columns };
+                    updatedColumns[selectedColumn].tasks.push(newTask);
+                    setColumns(updatedColumns);
+                    setNewTask('');
+                }
+            }}>
+                Add Task
+            </button>
             <button onClick={addColumn}>Add Column</button>
             <DragDropContext onDragEnd={onDragEnd}>
                 {columnOrder.map((columnId) => {
