@@ -36,6 +36,20 @@ button {
     cursor: pointer;
 }
 
+button {
+    margin: 10px 8px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:nth-of-type(2) {
+    margin-top: 20px;  /* Add margin to the "Add Column" button */
+}
+
 button:hover {
     background-color: #0056b3;
 }
