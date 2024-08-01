@@ -69,8 +69,23 @@ const KanbanBoard = () => {
                                     {column.tasks.map((task, index) => (
                                         <Draggable key={task} draggableId={task} index={index}>
                                             {(provided) => (
-                                                <div className={"task"} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                <div className={"task"}
+                                                     ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                     {task}
+                                                    <button onClick={() => {
+                                                        const updatedColumns = {...columns};
+                                                        updatedColumns[column.id].tasks.splice(index, 1);
+                                                        setColumns(updatedColumns);
+                                                    }} style={{
+                                                        marginLeft: '10px',
+                                                        backgroundColor: 'red',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer'
+                                                    }}>
+                                                        Delete
+                                                    </button>
                                                 </div>
                                             )}
                                         </Draggable>
