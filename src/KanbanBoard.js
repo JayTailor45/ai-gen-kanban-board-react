@@ -179,9 +179,11 @@ const KanbanBoard = () => {
                                                                 Edit
                                                             </button>
                                                             <button onClick={() => {
-                                                                const updatedColumns = {...columns};
-                                                                updatedColumns[column.id].tasks.splice(index, 1);
-                                                                setColumns(updatedColumns);
+                                                                if (window.confirm('Are you sure you want to delete this task?')) {
+                                                                    const updatedColumns = {...columns};
+                                                                    updatedColumns[column.id].tasks.splice(index, 1);
+                                                                    setColumns(updatedColumns);
+                                                                }
                                                             }} style={{
                                                                 marginLeft: '10px',
                                                                 backgroundColor: 'red',
