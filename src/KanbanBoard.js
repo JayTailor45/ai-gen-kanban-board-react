@@ -122,7 +122,7 @@ const KanbanBoard = () => {
                         return (
                             <Droppable key={column.id} droppableId={column.id}>
                                 {(provided) => (
-                                    <div class={"column"} ref={provided.innerRef} {...provided.droppableProps}>
+                                    <div className={"column"} ref={provided.innerRef} {...provided.droppableProps}>
                                         <h2>
                                             <input
                                                 type="text"
@@ -144,8 +144,7 @@ const KanbanBoard = () => {
                                         {column.tasks.map((task, index) => (
                                             <Draggable key={task.id} draggableId={task.id} index={index}>
                                                 {(provided) => (
-                                                    <div className={"task"}
-                                                         ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    <div className={"task"} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                         <div className={"task-name-wrapper"}>
                                                             <div title={task.priority} style={{
                                                                 width: '15px',
