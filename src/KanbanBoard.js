@@ -35,6 +35,19 @@ const KanbanBoard = () => {
         setColumnOrder([...columnOrder, newColumnId]);
     };
 
+    const getPriorityColor = (priority) => {
+        switch (priority) {
+            case 'high':
+                return 'red';
+            case 'medium':
+                return 'orange';
+            case 'low':
+                return 'green';
+            default:
+                return 'gray';
+        }
+    };
+
     return (
         <div>
             <input
@@ -133,7 +146,17 @@ const KanbanBoard = () => {
                                                 {(provided) => (
                                                     <div className={"task"}
                                                          ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                        {task.name} - <strong>{task.priority}</strong>
+                                                        <div className={"task-name-wrapper"}>
+                                                            <div title={task.priority} style={{
+                                                                width: '15px',
+                                                                height: '15px',
+                                                                borderRadius: '50%',
+                                                                backgroundColor: getPriorityColor(task.priority),
+                                                                display: 'inline-block',
+                                                                marginRight: '10px'
+                                                            }}></div>
+                                                            {task.name}
+                                                        </div>
                                                         <div style={{
                                                             display: "flex",
                                                             alignItems: "center",
