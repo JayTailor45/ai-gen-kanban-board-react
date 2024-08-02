@@ -1,16 +1,17 @@
 .kanban-board {
     display: flex;
-    justify-content: space-between;
+    overflow-x: auto; /* Enable horizontal scrolling */
     padding: 20px;
 }
 
 .column {
     background-color: #f0f0f0;
     border-radius: 5px;
-    width: 30%;
+    max-width: 300px; /* Set a fixed max width for columns */
     padding: 10px;
     margin: 0 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* Prevent columns from shrinking */
 }
 
 .column h2 {

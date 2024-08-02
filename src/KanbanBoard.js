@@ -66,75 +66,79 @@ const KanbanBoard = () => {
                 {editingTask !== null ? 'Update Task' : 'Add Task'}
             </button>
             <button onClick={addColumn}>Add Column</button>
-            <DragDropContext onDragEnd={onDragEnd}>
-                {columnOrder.map((columnId) => {
-                    const column = columns[columnId];
-                    return (
-                        <Droppable key={column.id} droppableId={column.id}>
-                            {(provided) => (
-                                <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    <h2>
-                                        <input
-                                            type="text"
-                                            value={column.title}
-                                            onChange={(e) => {
-                                                const updatedColumns = {...columns};
-                                                updatedColumns[column.id].title = e.target.value;
-                                                setColumns(updatedColumns);
-                                            }}
-                                            style={{
-                                                width: '100%',
-                                                textAlign: 'center',
-                                                border: 'none',
-                                                outline: 'none',
-                                                fontSize: '1.2em'
-                                            }}
-                                        />
-                                    </h2>
-                                    {column.tasks.map((task, index) => (
-                                        <Draggable key={task} draggableId={task} index={index}>
-                                            {(provided) => (
-                                                <div className={"task"}
-                                                     ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                    {task}
-                                                    <button onClick={() => {
-                                                        setNewTask(task); // Set the task to be edited
-                                                        setEditingTask(index); // Track the index of the task being edited
-                                                    }} style={{
-                                                        marginLeft: '10px',
-                                                        backgroundColor: 'blue',
-                                                        color: 'white',
-                                                        border: 'none',
-                                                        borderRadius: '5px',
-                                                        cursor: 'pointer'
-                                                    }}>
-                                                        Edit
-                                                    </button>
-                                                    <button onClick={() => {
-                                                        const updatedColumns = {...columns};
-                                                        updatedColumns[column.id].tasks.splice(index, 1);
-                                                        setColumns(updatedColumns);
-                                                    }} style={{
-                                                        marginLeft: '10px',
-                                                        backgroundColor: 'red',
-                                                        color: 'white',
-                                                        border: 'none',
-                                                        borderRadius: '5px',
-                                                        cursor: 'pointer'
-                                                    }}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    );
-                })}
-            </DragDropContext>
+            <div className="kanban-board">
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {columnOrder.map((columnId) => {
+                        const column = columns[columnId];
+                        return (
+                            <Droppable key={column.id} droppableId={column.id}>
+                                {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                        <h2>
+                                            <input
+                                                type="text"
+                                                value={column.title}
+                                                onChange={(e) => {
+                                                    const updatedColumns = {...columns};
+                                                    updatedColumns[column.id].title = e.target.value;
+                                                    setColumns(updatedColumns);
+                                                }}
+                                                style={{
+                                                    width: '100%',
+                                                    textAlign: 'center',
+                                                    border: 'none',
+                                                    outline: 'none',
+                                                    fontSize: '1.2em'
+                                                }}
+                                            />
+                                        </h2>
+                                        {column.tasks.map((task, index) => (
+                                            <Draggable key={task} draggableId={task} index={index}>
+                                                {(provided) => (
+                                                    <div className={"task"}
+                                                         ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                        {task}
+                                                        <div style={{display: "flex", alignItems: "center", justifyContent: 'space-between'}}>
+                                                            <button onClick={() => {
+                                                                setNewTask(task); // Set the task to be edited
+                                                                setEditingTask(index); // Track the index of the task being edited
+                                                            }} style={{
+                                                                marginLeft: '10px',
+                                                                backgroundColor: 'blue',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '5px',
+                                                                cursor: 'pointer'
+                                                            }}>
+                                                                Edit
+                                                            </button>
+                                                            <button onClick={() => {
+                                                                const updatedColumns = {...columns};
+                                                                updatedColumns[column.id].tasks.splice(index, 1);
+                                                                setColumns(updatedColumns);
+                                                            }} style={{
+                                                                marginLeft: '10px',
+                                                                backgroundColor: 'red',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '5px',
+                                                                cursor: 'pointer'
+                                                            }}>
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        );
+                    })}
+                </DragDropContext>
+            </div>
         </div>
     );
 };
