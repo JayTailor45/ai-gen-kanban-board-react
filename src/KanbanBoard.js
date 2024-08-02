@@ -4,10 +4,11 @@ import './KanbanBoard.css';
 
 const KanbanBoard = () => {
     const [newTask, setNewTask] = useState('');
+    const [taskId, setTaskId] = useState(null);
     const [editingTask, setEditingTask] = useState(null); // Track the task being edited
     const [selectedColumn, setSelectedColumn] = useState('column-1');
     const [columns, setColumns] = useState({
-        'column-1': {id: 'column-1', title: 'To Do', tasks: []},
+        'column-1': {id: 'column-1', title: 'To Do', tasks: [{id: 'task-123-123-123', name: 'A task'}]},
         'column-2': {id: 'column-2', title: 'In Progress', tasks: []},
         'column-3': {id: 'column-3', title: 'Done', tasks: []},
     });
@@ -51,20 +52,40 @@ const KanbanBoard = () => {
             <button onClick={() => {
                 if (editingTask !== null) {
                     const updatedColumns = {...columns};
-                    updatedColumns[selectedColumn].tasks[editingTask] = newTask; // Update the task
+                    if(!updatedColumns[selectedColumn].tasks[editingTask]) {
+                        for (let col in updatedColumns) {
+                            updatedColumns[col].tasks = updatedColumns[col].tasks.filter(task => task.id !== taskId)
+                        }
+                    }
+                    const task = { name: newTask, id: taskId };
+                    updatedColumns[selectedColumn].tasks[editingTask] = task; // Update the task
                     setColumns(updatedColumns);
                     setEditingTask(null); // Reset editing task
                 } else {
                     if (newTask) {
+                        const getRandomNumber = () => Math.floor(Math.random() * 100000);
                         const updatedColumns = {...columns};
-                        updatedColumns[selectedColumn].tasks.push(newTask); // Add new task
+                        const newTaskId = `task-${getRandomNumber()}-${getRandomNumber()}-${getRandomNumber()}`; // Generate a unique ID for the new task
+                        updatedColumns[selectedColumn].tasks.push({ name: newTask, id: newTaskId }); // Add new task
                         setColumns(updatedColumns);
                     }
                 }
                 setNewTask(''); // Clear input
+                setTaskId(null); // Clear taskId
+                setSelectedColumn(Object.keys(columns)[0]); // rest default column
             }}>
                 {editingTask !== null ? 'Update Task' : 'Add Task'}
             </button>
+            {editingTask !== null && (
+                <button onClick={() => {
+                    setEditingTask(null); // Cancel editing
+                    setNewTask(''); // Clear input
+                    setTaskId(null); // Clear taskId
+                    setSelectedColumn(Object.keys(columns)[0]); // rest default column
+                }} style={{ marginLeft: '10px', backgroundColor: 'gray', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                    Cancel
+                </button>
+            )}
             <button onClick={addColumn}>Add Column</button>
             <div className="kanban-board">
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -93,15 +114,17 @@ const KanbanBoard = () => {
                                             />
                                         </h2>
                                         {column.tasks.map((task, index) => (
-                                            <Draggable key={task} draggableId={task} index={index}>
+                                            <Draggable key={task.id} draggableId={task.id} index={index}>
                                                 {(provided) => (
                                                     <div className={"task"}
                                                          ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                        {task}
+                                                        {task.name} - <strong>{task.priority}</strong>
                                                         <div style={{display: "flex", alignItems: "center", justifyContent: 'space-between'}}>
                                                             <button onClick={() => {
-                                                                setNewTask(task); // Set the task to be edited
+                                                                setNewTask(task.name); // Set the task to be edited
                                                                 setEditingTask(index); // Track the index of the task being edited
+                                                                setTaskId(task.id); // Track the taskId of the task being edited
+                                                                setSelectedColumn(column.id);
                                                             }} style={{
                                                                 marginLeft: '10px',
                                                                 backgroundColor: 'blue',
