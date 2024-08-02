@@ -6,6 +6,7 @@
 
 .column {
     background-color: #f0f0f0;
+    border: 1px solid #ccc; /* Add border to each column */
     border-radius: 5px;
     max-width: 300px; /* Set a fixed max width for columns */
     padding: 10px;
@@ -16,6 +17,11 @@
 
 .column h2 {
     text-align: center;
+}
+
+.column h2 input {
+    margin: 0;
+    width: 84% !important;
 }
 
 .task {

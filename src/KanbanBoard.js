@@ -73,7 +73,7 @@ const KanbanBoard = () => {
                         return (
                             <Droppable key={column.id} droppableId={column.id}>
                                 {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                    <div class={"column"} ref={provided.innerRef} {...provided.droppableProps}>
                                         <h2>
                                             <input
                                                 type="text"
